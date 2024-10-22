@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-""" Update MongoDB document using PyMongo """
+""" Update MongoDB document using PyMongo
+"""
 
 
 def update_topics(mongo_collection, name, topics):
@@ -10,5 +11,5 @@ def update_topics(mongo_collection, name, topics):
     coll = mongo_collection
     coll.update_many(
             {"name": name},
-            {"$set": "topics": topics}
+            {"$set": {"topics": topics}}
             )
