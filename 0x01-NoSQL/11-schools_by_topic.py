@@ -11,9 +11,10 @@ def schools_by_topic(mongo_collection, topic):
 
     coll = mongo_collection
     return [school for school in coll.find(
-            {"topics":
-                {
-                    $elemMatch: {$eq: topic}
-                }
+            {
+                "topics":
+                    {
+                        "$elemMatch": {"$eq": topic}
+                    }
             }
             )]
