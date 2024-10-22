@@ -8,8 +8,8 @@ def list_all(mongo_collection):
     return [] if collection si empty
     """
 
-    coll = mongo_collection.find()
-    if not len(coll):
+    coll = mongo_collection
+    if not coll.count_documents({}):
         return []
-    for doc in coll:
-        print(doc)
+
+    return [doc for doc in coll.find()]
