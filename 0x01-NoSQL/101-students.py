@@ -27,7 +27,7 @@ def top_student(mongo_collection):
             }
         },
         {
-            "$limit": 1  # To get the top student only
+            "$limit": 1
         }
     ])
 
