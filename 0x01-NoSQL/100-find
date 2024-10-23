@@ -1,0 +1,2 @@
+// Filter document by Regex
+db.school.find("name": { "$regex": "[^Holberton]"})
