@@ -11,24 +11,21 @@ def top_student(mongo_collection):
 
     coll = mongo_collection
     top_students = coll.aggregate([
-        {
-            "$unwind": "$topics"
-        },
-        {
-            "$group": {
-                "_id": "$_id",
-                "name": {"$first": "$name"},
-                "averageScore": {"$avg": "$topics.score"}
-            }
-        },
-        {
-            "$sort": {
-                "averageScore": -1
-            }
-        },
-        {
-            "$limit": 1
-        }
-    ])
+            {
+                '$project': {
+                    '_id': 1,
+                    'name': 1,
+                    'averageScore': {
+                        '$avg': {
+                            '$avg': '$topics.score',
+                        },
+                    },
+                    'topics': 1,
+                },
+            },
+            {
+                '$sort': {'averageScore': -1},
+            },
+        ])
 
     return top_students
