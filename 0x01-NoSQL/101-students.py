@@ -28,4 +28,4 @@ def top_student(mongo_collection):
             },
         ])
 
-    return top_students
+    return list(top_students)
