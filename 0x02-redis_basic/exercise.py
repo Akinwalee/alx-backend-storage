@@ -6,6 +6,7 @@ Module for using Redis for caching in python
 import uuid
 import redis
 from typing import Any, Callable, Union
+from functools import wraps
 
 
 class Cache:
@@ -48,3 +49,19 @@ class Cache:
         Retrieves an int value from Redis based on key
         """
         return self.get(key, lambda x: int(x))
+
+
+
+def count_calls(method: Callable) -> Callable:
+    """
+    Counts the number of calls made to a method in Cache class.
+    """
+    @wraps(method)
+    def invoker(self, *args, **kwargs) -> Any:
+        """
+        Calls the given method after incrementing its call counter.
+        """
+        if isinstance(self._redis, redis.Redis):
+            self._redis.incr(method.__qualname__)
+        return method(self, *args, **kwargs)
+    return invoker
